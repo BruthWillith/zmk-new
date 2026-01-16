@@ -1,0 +1,11 @@
+file_format: "1"
+type: shield
+id: charybdis
+name: Charybdis
+features:
+  - keys
+requires:
+  - nice_nano_v2
+siblings:
+  - charybdis_left
+  - charybdis_right
