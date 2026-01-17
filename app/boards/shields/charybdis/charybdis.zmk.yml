@@ -2,6 +2,7 @@ file_format: "1"
 type: shield
 id: charybdis
 name: Charybdis
+url: https://github.com/BruthWillith/zmk-new
 features:
   - keys
 requires:
