@@ -5,7 +5,7 @@ name: Charybdis
 features:
   - keys
 requires:
-  - nice_nano_v2
+  - nice_nano
 siblings:
   - charybdis_left
   - charybdis_right
