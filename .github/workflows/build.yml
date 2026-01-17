@@ -27,7 +27,7 @@ jobs:
     needs: compile-matrix
     strategy:
       matrix:
-        include: ${{ fromJSON(needs.compile-matrix.outputs.include-list) }}
+        include: ${{ fromJSON(needs.compile-matrix.outputs.include-list || '[{"board":"nice_nano_v2","shield":"charybdis_left"}]') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
