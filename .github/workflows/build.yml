@@ -70,7 +70,7 @@ jobs:
         run: |
           echo "==== charybdis_right.overlay being used ===="
           sed -n '1,200p' app/boards/shields/charybdis_right/charybdis_right.overlay
-          west build -s app -p -b ${{ matrix.board }} -- -DSHIELD=${{ matrix.shield }}
+          west build -s app -p -b ${{ matrix.board }} -- -DSHIELD=${{ matrix.shield }} -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
       - name: Upload UF2
         uses: actions/upload-artifact@v4
         with:
