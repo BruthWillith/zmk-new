@@ -71,7 +71,7 @@ jobs:
           echo "==== RIGHT overlay file content ===="
           sed -n '1,220p' app/boards/shields/charybdis_right/charybdis_right.overlay
 
-          west build -s app -p -b ${{ matrix.board }} -- -DSHIELD=${{ matrix.shield }} -DDTC_OVERLAY_FILE=app/boards/shields/charybdis_right/charybdis_right.overlay
+          west build -s app -p -b ${{ matrix.board }} -- -DSHIELD=${{ matrix.shield }} -DZMK_CONFIG=${{ github.workspace }}/config
 
           echo "==== FINAL zephyr.dts (search for trackball) ===="
           grep -n "trackball@0" -n build/zephyr/zephyr.dts || true
