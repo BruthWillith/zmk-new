@@ -68,6 +68,8 @@ jobs:
         run: npm install @actions/artifact
       - name: Build firmware
         run: |
+          echo "==== charybdis_right.overlay being used ===="
+          sed -n '1,200p' app/boards/shields/charybdis_right/charybdis_right.overlay
           west build -s app -p -b ${{ matrix.board }} -- -DSHIELD=${{ matrix.shield }}
       - name: Upload UF2
         uses: actions/upload-artifact@v4
