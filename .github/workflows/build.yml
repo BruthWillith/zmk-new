@@ -75,15 +75,17 @@ jobs:
           find "${{ github.workspace }}/config" -maxdepth 6 -type f -name "*.keymap" -print || true
 
           set +e
-          west build -s app -p -b ${{ matrix.board }} -- -DSHIELD=${{ matrix.shield }} -DZMK_CONFIG=$GITHUB_WORKSPACE/config
+          git config --global --add safe.directory "$GITHUB_WORKSPACE" || true
+          ls -la "$GITHUB_WORKSPACE" && ls -la "$GITHUB_WORKSPACE/config" || true
+          west build -s app -p -d build/${{ matrix.shield }} -b ${{ matrix.board }} -- -DSHIELD=${{ matrix.shield }} -DZMK_CONFIG=$GITHUB_WORKSPACE/config
           RC=$?
           set -e
 
           echo "==== FINAL zephyr.dts (search for trackball) ===="
-          grep -n "trackball@0" build/zephyr/zephyr.dts || true
+          grep -n "trackball@0" build/${{ matrix.shield }}/zephyr/zephyr.dts || true
 
           echo "==== trackball node context ===="
-          grep -n -A25 -B10 "trackball@0" build/zephyr/zephyr.dts || true
+          grep -n -A25 -B10 "trackball@0" build/${{ matrix.shield }}/zephyr/zephyr.dts || true
 
           exit $RC
 
@@ -91,7 +93,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.board }}-${{ matrix.shield }}-uf2
-          path: build/zephyr/zmk.uf2
+          path: build/${{ matrix.shield }}/zephyr/zmk.uf2
       - name: Upload artifacts
         uses: actions/github-script@v7
         continue-on-error: ${{ github.event_name == 'pull_request' }}
@@ -112,10 +114,10 @@ jobs:
                 const fileExtensions = ["hex", "uf2"];
 
                 const files = fileExtensions
-                  .map(extension => "build/zephyr/zmk." + extension)
+                  .map(extension => `build/${shieldArgs.shield}/zephyr/zmk.${extension}`)
                   .filter(path => fs.existsSync(path));
 
-                const rootDirectory = 'build/zephyr';
+                const rootDirectory = `build/${shieldArgs.shield}/zephyr`;
                 const options = {
                     continueOnError: true
                 }
