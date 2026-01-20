@@ -24,7 +24,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: docker.io/zmkfirmware/zmk-build-arm:4.1
-    needs: compile-matrix
     strategy:
       fail-fast: false
       matrix:
