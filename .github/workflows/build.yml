@@ -71,12 +71,21 @@ jobs:
           echo "==== RIGHT overlay file content ===="
           sed -n '1,220p' app/boards/shields/charybdis_right/charybdis_right.overlay
 
+          echo "==== KEYMAP files found under config ===="
+          find "${{ github.workspace }}/config" -maxdepth 6 -type f -name "*.keymap" -print || true
+
+          set +e
           west build -s app -p -b ${{ matrix.board }} -- -DSHIELD=${{ matrix.shield }} -DZMK_CONFIG=${{ github.workspace }}/config
+          RC=$?
+          set -e
 
           echo "==== FINAL zephyr.dts (search for trackball) ===="
-          grep -n "trackball@0" -n build/zephyr/zephyr.dts || true
+          grep -n "trackball@0" build/zephyr/zephyr.dts || true
+
           echo "==== trackball node context ===="
-          awk 'NR>=1 && NR<=4000 {print}' build/zephyr/zephyr.dts | sed -n '1,4000p' | grep -n -A25 -B10 "trackball@0" || true
+          grep -n -A25 -B10 "trackball@0" build/zephyr/zephyr.dts || true
+
+          exit $RC
 
       - name: Upload UF2
         uses: actions/upload-artifact@v4
