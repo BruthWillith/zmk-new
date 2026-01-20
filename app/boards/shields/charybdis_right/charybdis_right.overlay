@@ -59,10 +59,11 @@
         snipe-layers = <4>;
       // automouse-layer = <3>;
     };
-	&trackball {
-    motion-gpios = <&gpio0 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 };
 
+&trackball {
+    motion-gpios = <&gpio0 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+};
 
 //RGB bus
 &pinctrl {
