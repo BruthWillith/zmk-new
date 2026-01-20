@@ -75,7 +75,7 @@ jobs:
           find "${{ github.workspace }}/config" -maxdepth 6 -type f -name "*.keymap" -print || true
 
           set +e
-          west build -s app -p -b ${{ matrix.board }} -- -DSHIELD=${{ matrix.shield }} -DZMK_CONFIG=${{ github.workspace }}/config
+          west build -s app -p -b ${{ matrix.board }} -- -DSHIELD=${{ matrix.shield }} -DZMK_CONFIG=$GITHUB_WORKSPACE/config
           RC=$?
           set -e
 
