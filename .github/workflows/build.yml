@@ -74,9 +74,6 @@ jobs:
           echo "==== RIGHT overlay actually being used (from config) ===="
           sed -n '1,220p' "$GITHUB_WORKSPACE/config/boards/shields/charybdis/charybdis_right.overlay" || true
           
-          echo "==== RIGHT overlay file content ===="
-          sed -n '1,220p' app/boards/shields/charybdis_right/charybdis_right.overlay || true
-
           echo "==== KEYMAP files found under config ===="
           find "${{ github.workspace }}/config" -maxdepth 6 -type f -name "*.keymap" -print || true
 
