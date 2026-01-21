@@ -68,6 +68,12 @@ jobs:
         run: npm install @actions/artifact
       - name: Build firmware
         run: |
+          echo "==== KEYMAP with line numbers (around the failing line) ===="
+          nl -ba "$GITHUB_WORKSPACE/config/charybdis.keymap" | sed -n '35,60p' || true
+
+          echo "==== RIGHT overlay actually being used (from config) ===="
+          sed -n '1,220p "$GITHUB_WORKSPACE/config/boards/shields/charybdis/charybdis_right.overlay" || true
+          
           echo "==== RIGHT overlay file content ===="
           sed -n '1,220p' app/boards/shields/charybdis_right/charybdis_right.overlay
 
