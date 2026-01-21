@@ -72,10 +72,10 @@ jobs:
           nl -ba "$GITHUB_WORKSPACE/config/charybdis.keymap" | sed -n '35,60p' || true
 
           echo "==== RIGHT overlay actually being used (from config) ===="
-          sed -n '1,220p "$GITHUB_WORKSPACE/config/boards/shields/charybdis/charybdis_right.overlay" || true
+          sed -n '1,220p' "$GITHUB_WORKSPACE/config/boards/shields/charybdis/charybdis_right.overlay" || true
           
           echo "==== RIGHT overlay file content ===="
-          sed -n '1,220p' app/boards/shields/charybdis_right/charybdis_right.overlay
+          sed -n '1,220p' app/boards/shields/charybdis_right/charybdis_right.overlay || true
 
           echo "==== KEYMAP files found under config ===="
           find "${{ github.workspace }}/config" -maxdepth 6 -type f -name "*.keymap" -print || true
@@ -83,7 +83,7 @@ jobs:
           set +e
           git config --global --add safe.directory "$GITHUB_WORKSPACE" || true
           ls -la "$GITHUB_WORKSPACE" && ls -la "$GITHUB_WORKSPACE/config" || true
-          west build -s app -p -d build/${{ matrix.shield }} -b ${{ matrix.board }} -- -DSHIELD=${{ matrix.shield }} -DZMK_CONFIG=$GITHUB_WORKSPACE/config
+          west build -s app -p -d build/${{ matrix.shield }} -b ${{ matrix.board }} -- -DSHIELD=${{ matrix.shield }} -DZMK_CONFIG="$GITHUB_WORKSPACE/config"
           RC=$?
           set -e
 
