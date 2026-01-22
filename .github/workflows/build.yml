@@ -87,6 +87,9 @@ jobs:
           set +e
           git config --global --add safe.directory "$GITHUB_WORKSPACE" || true
           ls -la "$GITHUB_WORKSPACE" && ls -la "$GITHUB_WORKSPACE/config" || true
+          
+          rm -rf "build/${{ matrix.shield }}"
+          
           west build -s app -p -d build/${{ matrix.shield }} -b ${{ matrix.board }} -- -DSHIELD=${{ matrix.shield }} -DZMK_CONFIG="$GITHUB_WORKSPACE/config"
           RC=$?
           set -e
